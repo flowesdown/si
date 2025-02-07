@@ -1,17 +1,15 @@
 #include <stdio.h>
 
 float averageOverFive(int grades[], int size) {
-    int count = 0;
     float sum = 0;
     
     for (int i = 0; i < size; i++) {
-        if (grades[i] > 5) {
+        if (grades[i] >= 5) {
             sum += grades[i];
-            count++;
         }
     }
     
-    return count > 0 ? sum / count : 0.0;
+    return sum / size;
 }
 
 int main() {

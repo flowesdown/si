@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Node {
+    char name[100];
+    int year;
+    struct Node *next;
+};
+
+typedef struct Node Node;
+
+Node* createNode(const char* name, int year) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    strcpy(newNode->name, name);
+    newNode->year = year;
+    newNode->next = NULL;
+    return newNode;
+}
+
+void addNode(Node** first, const char* name, int year) {
+    Node* newNode = createNode(name, year);
+    if (*first == NULL) {
+        *first = newNode;
+    } else {
+        Node* temp = *first;
+        while (temp->next != NULL)
+            temp = temp->next;
+        temp->next = newNode;
+    }
+}
+
+void displayList(Node* first) {
+    while (first != NULL) {
+        printf("Name: %s, Year: %d\n", first->name, first->year);
+        first = first->next;
+    }
+}
+
+void freeList(Node* first) {
+    Node* temp;
+    while (first != NULL) {
+        temp = first;
+        first = first->next;
+        free(temp);
+    }
+}
+
+int main() {
+    Node* first = NULL;
+    addNode(&first, "Alice", 2001);
+    addNode(&first, "Bob", 1998);
+    addNode(&first, "Charlie", 2003);
+    displayList(first);
+    freeList(first);
+    return 0;
+}
